@@ -8,6 +8,7 @@ meta = {
 new_shop_enter = create_sound('gamba.wav')
 new_shop_nope = create_sound('lose.wav')
 new_secret_a = create_sound('win.wav')
+new_death_ghost = create_sound('Jhin 4.wav')
 jhin_sound = create_sound('Jhin 4.wav')
 orbs_destroyed_in_level = 0
 
@@ -68,6 +69,29 @@ set_vanilla_sound_callback(VANILLA_SOUND.SHARED_COSMIC_ORB_DESTROY, VANILLA_SOUN
     new_cosmic_orb:set_volume(0.25)
     new_cosmic_orb:set_pause(false)
 end)
+
+set_vanilla_sound_callback(VANILLA_SOUND.PLAYER_DEATH_GHOST, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(death_ghost)
+    death_ghost:stop()
+    local new_death_ghost_playing = new_death_ghost:play() -- play our own sound
+    new_death_ghost_playing:set_volume(0.4)
+    new_death_ghost_playing:set_pause(false)
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 meta = {
 	name = "Orb Counter",
