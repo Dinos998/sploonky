@@ -14,38 +14,40 @@ orbs_destroyed_in_level = 0
 
 set_callback( function( )
 	
-    local prev_world_aux = 0
-    local prev_level_aux = 0
-	local world_aux = state.world
-	local level_aux = state.level
+    orbs_destroyed_in_level = 0
+    
+    -- local prev_world_aux = 0
+    -- local prev_level_aux = 0
+	-- local world_aux = state.world
+	-- local level_aux = state.level
 
-    if world_aux ~= prev_world_aux or level_aux ~= prev_level_aux then
-        orbs_destroyed_in_level = 0
-        prev_world_aux = world_aux
-        prev_level_aux = level_aux
-    end
+    -- if world_aux ~= prev_world_aux or level_aux ~= prev_level_aux then
+    --     orbs_destroyed_in_level = 0
+    --     prev_world_aux = world_aux
+    --     prev_level_aux = level_aux
+    -- end
 
-end, ON.POST_LOAD_SCREEN)
+end, ON.LEVEL)
 
 
 set_vanilla_sound_callback(VANILLA_SOUND.SHOP_SHOP_ENTER, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(shop_enter)
     shop_enter:stop()
     local new_shop_enter_playing = new_shop_enter:play(true) -- play our own sound
-    new_shop_enter_playing:set_volume(0.4)
+    new_shop_enter_playing:set_volume(options.sfx_volume/100)
     new_shop_enter_playing:set_pause(false)
 end)
 
 set_vanilla_sound_callback(VANILLA_SOUND.SHOP_SHOP_NOPE, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(shop_nope)
     shop_nope:stop()
     local new_shop_nope_playing = new_shop_nope:play() -- play our own sound
-    new_shop_nope_playing:set_volume(0.4)
+    new_shop_nope_playing:set_volume(options.sfx_volume/100)
     new_shop_nope_playing:set_pause(false)
 end)
 
 set_vanilla_sound_callback(VANILLA_SOUND.UI_SECRET, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(ui_secret_a)
     ui_secret_a:stop()
     local new_secret_a_playing = new_secret_a:play() -- play our own sound
-    new_secret_a_playing:set_volume(0.4)
+    new_secret_a_playing:set_volume(options.sfx_volume/100)
     new_secret_a_playing:set_pause(false)
 end)
 
@@ -66,18 +68,39 @@ set_vanilla_sound_callback(VANILLA_SOUND.SHARED_COSMIC_ORB_DESTROY, VANILLA_SOUN
     end
     
     local new_cosmic_orb = jhin_sound:play() -- play our own sound
-    new_cosmic_orb:set_volume(0.25)
+    new_cosmic_orb:set_volume(options.sfx_volume/100)
     new_cosmic_orb:set_pause(false)
 end)
 
 set_vanilla_sound_callback(VANILLA_SOUND.PLAYER_DEATH_GHOST, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(death_ghost)
     death_ghost:stop()
     local new_death_ghost_playing = new_death_ghost:play() -- play our own sound
-    new_death_ghost_playing:set_volume(0.4)
+    new_death_ghost_playing:set_volume(options.sfx_volume/100)
     new_death_ghost_playing:set_pause(false)
 end)
 
+register_option_int("sfx_volume", "sfx volume", "", 40, 16, 256)
 
+set_callback(function(save_ctx)
+    local save_data_str = json.encode({
+		["version"] = "0.1",
+		["options"] = options
+	})
+    save_ctx:save(save_data_str)
+end, ON.SAVE)
+
+set_callback(function(load_ctx)
+    local save_data_str = load_ctx:load()
+    if save_data_str ~= "" then
+        local save_data = json.decode(save_data_str)
+		if save_data.options then
+			options = save_data.options
+			if options.sfx_volume == nil then
+				options.sfx_volume = 40
+			end
+		end
+    end
+end, ON.LOAD)
 
 
 
