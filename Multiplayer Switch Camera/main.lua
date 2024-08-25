@@ -75,10 +75,20 @@ function is_door_button_pressed()
     return result
 end
 
+--returns i if a valid keybind is pressed
 function get_pressed_number_key()
+    -- fetches key inputs from user
     local keyboard = get_raw_input().keyboard
-    for i = 0, 4 do
-        if keyboard[65 + i].pressed then
+    
+    -- Keybind Map
+    -- keyboard[0-4?] = arrow keys <-- NEEDS FURTHER TESTING
+    -- keyboard[65-74] = 0-9
+    -- keyboard[39] = spacebar
+    -- keyboard[40] = backspace
+    -- keyboard[41-44] = F1-F4
+    
+    for i = -1, 4 do
+        if keyboard[40 + i].pressed then
             return i
         end
     end
@@ -179,15 +189,13 @@ end
 
 function process_number_button()
     local number_key = get_pressed_number_key()
-    if number_key ~= nil then
-        if number_key == 0 then
+
+    if number_key ~= nil and is_online then
+        if number_key == -1 then -- if spacebar, swap back to self camera
             number_key = local_player_slot
-        elseif number_key ~= local_player_slot and is_online and (not is_local_player_dead) then
-            return false
         end
 
         local selected_player = get_local_player(number_key)
-        -- # TODO this line could be changed to league controls somehow
         if selected_player ~= nil and selected_player.health ~= 0 then
             focus_player(number_key)
             return true

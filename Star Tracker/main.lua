@@ -132,7 +132,6 @@ function tracker:updateSavedPets(items)
 				self.pet.type = items.saved_pets[i] - 325
 			elseif items.saved_pets[i] - 325 ~= self.pet.type then
 				self.pet.type = 4
-
 			end
 		end
 	end
@@ -217,7 +216,7 @@ end
 ---@param basey number
 function tracker:drawScores(draw_ctx, basex, basey)
 	if self.pet.count + self.pet.count_in_level ~= 0 then
-		basex, basey = self:drawScore(draw_ctx, self.images.pet[self.pet.type], self.pet.count + self.pet.count_in_level, basex, basey, rgba(255, 255, 255, 200))
+		basex, basey = self:drawScore(draw_ctx, self.images.pet[self.pet.type], self.pet.count + self.pet.count_in_level .. "/16", basex, basey, rgba(255, 255, 255, 200))
 	end
 
 	if self.shopkeeper_aggro ~= 0 then
