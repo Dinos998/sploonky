@@ -3,6 +3,7 @@ meta = {
 	version = "0.1",
 	description = "There is no description. I can't english",
 	author = "Dinos998",
+    online_safe = true,
 }
 
 new_shop_enter = create_sound('gamba.wav')
@@ -171,13 +172,13 @@ end, ON.LOAD)
 
 
 
-meta = {
-	name = "Orb Counter",
-	version = "0.1",
-	description = "Displays how many orbs are left",
-	author = "fienestar",
-	online_safe = true,
-}
+-- meta = {
+-- 	name = "Orb Counter",
+-- 	version = "0.1",
+-- 	description = "Displays how many orbs are left",
+-- 	author = "fienestar",
+-- 	online_safe = true,
+-- }
 
 register_option_int("font_size", "font size", "", 86, 16, 256)
 
