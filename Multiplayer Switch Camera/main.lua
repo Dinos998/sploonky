@@ -187,7 +187,7 @@ function process_number_button()
         end
 
         local selected_player = get_local_player(number_key)
-        # TODO this line could be changed to league controls somehow
+        -- # TODO this line could be changed to league controls somehow
         if selected_player ~= nil and selected_player.health ~= 0 then
             focus_player(number_key)
             return true
