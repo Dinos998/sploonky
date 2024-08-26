@@ -181,6 +181,12 @@ end, ON.LOAD)
 -- }
 
 register_option_int("font_size", "font size", "", 86, 16, 256)
+register_option_int("x_location", "x location", "", 86, 16, 256)
+register_option_int("y_location", "y location", "", 86, 16, 256)
+register_option_int("red", "red", "", 86, 16, 256)
+register_option_int("green", "green", "", 86, 16, 256)
+register_option_int("blue", "blue", "", 86, 16, 256)
+register_option_int("opacity", "opacity", "", 86, 16, 256)
 
 set_callback(function(save_ctx)
     local save_data_str = json.encode({
@@ -199,6 +205,30 @@ set_callback(function(load_ctx)
 			if options.font_size == nil then
 				options.font_size = 86
 			end
+
+            if options.y_location == nil then
+                options.y_location = 90
+            end
+            
+            if options.x_location == nil then
+                options.x_location = 0
+            end
+
+            if options.red == nil then
+                options.red = 255
+            end
+
+            if options.green == nil then
+                options.green = 255
+            end
+
+            if options.blue == nil then
+                options.blue = 255
+            end
+
+            if options.opacity == nil then
+                options.opacity = 100
+            end
 		end
     end
 end, ON.LOAD)
@@ -221,5 +251,5 @@ set_callback(function(ctx)
 	local orb_count = tostring(orbs_destroyed_in_level)
 
 	width32, _ = draw_text_size(options.font_size, orb_count)
-	ctx:draw_text(-width32/2, 20, options.font_size, orb_count, rgba(243, 137, 215, 75))
+	ctx:draw_text(-width32/2 + options.x_location / 100, options.y_location / 100, options.font_size, orb_count, rgba(options.red, options.green, options.blue, math.floor(options.opacity * 2.55)))
 end, ON.GUIFRAME)
