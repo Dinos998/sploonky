@@ -216,11 +216,10 @@ end
 ---@param basey number
 function tracker:drawScores(draw_ctx, basex, basey)
 	if self.pet.count + self.pet.count_in_level ~= 0 then
-		if self.pet.count + self.pet.count_in_level >= 16 then
+		if self.pet.count + self.pet.count_in_level >= 16 then	
 			basex, basey = self:drawScore(draw_ctx, self.images.pet[self.pet.type], self.pet.count + self.pet.count_in_level .. "/16", basex, basey, rgba(0, 255, 0, 200))
 		else
 			basex, basey = self:drawScore(draw_ctx, self.images.pet[self.pet.type], self.pet.count + self.pet.count_in_level .. "/16", basex, basey, rgba(255, 255, 255, 200))
-	
 		end
 	end
 
